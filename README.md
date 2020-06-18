@@ -10,5 +10,5 @@ local Message = _G.Message
 local Arguments = _G.Arguments
 
 --// To respond with a message simply return it.
-return(message:reply("Hello! How are you doing <@" .. message.author.id .. ">?"))
+return(Message:reply("Hello! How are you doing <@" .. Message.author.id .. ">?"))
 ```
