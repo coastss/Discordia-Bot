@@ -1,4 +1,4 @@
-local Discordia = require("discordia")
+local Discordia = _G.Discordia
 Discordia.extensions()
 
 local function Embed(title, fields, color)
