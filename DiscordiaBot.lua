@@ -8,7 +8,7 @@ Discordia.extensions()
 
 --// Clean & easy environment injection.
 local Environment = {
-    Discordia = Discordia
+    Discordia = Discordia,
     Client = Client
 }
 
