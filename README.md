@@ -1,5 +1,5 @@
 # Gamer-Discordia-Bot
-A discord bot written in lua discordia.
+A discord bot written with the Discordia library.
 Clean and simple to use and easy to create new commands.
 
 To create a new command enter the modules directory, then to the commands directory, and create a lua file corresponding to the new command's name, filenames are case sensitive. Initialize each new command with these variables.
