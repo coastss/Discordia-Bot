@@ -4,4 +4,4 @@ local Client = _G.Client
 local Message = _G.Message
 local Arguments = _G.Arguments
 
-return(message:reply("pong!"))
+return(Message:reply("pong!"))
