@@ -1,4 +1,4 @@
-# Gamer-Discordia-Bot
+# Discordia-Bot
 A Discord bot written with the Discordia library.
 Clean and simple to use and easy to create new commands.
 
