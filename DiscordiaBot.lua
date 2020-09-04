@@ -24,7 +24,7 @@ local Environment = {
     Utilites = Utilites,
     FS = FS,
     Json = Json,
-    PrettyPrint = PrettyPrint,
+    PrettyPrint = PrettyPrint
 }
 
 for i, v in pairs(Environment) do
