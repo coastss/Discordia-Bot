@@ -11,4 +11,5 @@ local AuthorId = Message.author.id
 local Guild = Client:getGuild(Configuration.ServerId)
 local IsDirectMessages = (Message.channel.type == 1 and true or false)
 --// Initialize every new command with the stuff above this comment, you can insert more things from the enviroment table in the main file then insert them by doing. local NewVariable = _G.NewVariable.
+
 return Message:reply("Pong!")
