@@ -69,5 +69,4 @@ Client:on("messageCreate", function(message)
     end)
 end)
 
-WeblitApp.start()
 Client:run(Configuration.Token)
