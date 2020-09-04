@@ -1,60 +1,73 @@
 local Discordia = require("discordia")
-local FS = require("fs")
+local Fs = require("fs")
+local Json = require("json")
+local PrettyPrint = require("pretty-print")
 
 local Configuration = require("./Configuration.lua")
+local Utilites = require("./Modules/Utilites.lua")
 
 local Client = Discordia.Client()
 Discordia.extensions()
 
---// Clean & easy environment injection.
+local FS = {
+    Writefile = Fs.writeFileSync,
+    Readfile = Fs.readFileSync,
+    UnlinkFile = Fs.unlink,
+    RenameFile = Fs.rename,
+    FileExists = Fs.existsSync
+}
+
 local Environment = {
     Discordia = Discordia,
-    Client = Client
+    Client = Client,
+    Configuration = Configuration,
+    Utilites = Utilites,
+    FS = FS,
+    Json = Json,
+    PrettyPrint = PrettyPrint,
 }
 
 for i, v in pairs(Environment) do
     _G[i] = v
 end
 
-local Writefile = FS.writeFileSync
-local Readfile = FS.readFileSync
-local UnlinkFile = FS.unlink
-local RenameFile = FS.rename
-local FileExists = FS.existsSync
+function CommandExists(command)
+    local CommandName = command:gsub("^%l", string.upper)
 
-local function CommandExists(command)
-    if FileExists("./Modules/Commands/" .. command .. ".lua") then
+    if FS.FileExists("./Commands/" .. CommandName .. ".lua") then
         return true
     else
         return false
     end
 end
 
-local function LoadCommand(command)
+function LoadCommand(command)
+    local CommandName = command:gsub("^%l", string.upper)
     local Environment = setmetatable({}, {__index = _G})
-    assert(pcall(setfenv(assert(loadfile("./Modules/Commands/" .. command .. ".lua")), Environment)))
+
+    assert(pcall(setfenv(assert(loadfile("./Commands/" .. CommandName .. ".lua")), Environment)))
     setmetatable(Environment, nil)
     
     return Environment
 end
 
---// Runs the command from the command's file.
 Client:on("messageCreate", function(message)
-    local Arguments = message.content:split(" ")
+    pcall(function()
+        local Arguments = message.content:split(" ")
 
-    if Arguments[1]:find(Configuration.Prefix) then
-        local Command = Arguments[1]:gsub("!", "")
+        if Arguments[1]:find(Configuration.Prefix) then
+            local Command = Arguments[1]:gsub(Configuration.Prefix, "")
 
-        if CommandExists(Command) then
-            pcall(function()
+            if CommandExists(Command) then
                 table.remove(Arguments, 1)
 
                 _G.Message = message
                 _G.Arguments = Arguments
                 LoadCommand(Command)
-            end)
+            end
         end
-    end
+    end)
 end)
 
+WeblitApp.start()
 Client:run(Configuration.Token)
