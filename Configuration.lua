@@ -13,5 +13,6 @@ local Colors = {
 
 return {
     Token = Token,
-    Prefix = Prefix
+    Prefix = Prefix,
+    Colors = Colors
 }
